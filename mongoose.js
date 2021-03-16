@@ -42,7 +42,6 @@ const results = new Schema({
 });
 
 
-
 const questions = new Schema({
   product_id: {
     type: Number,
