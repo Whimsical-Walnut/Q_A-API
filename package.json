@@ -1,0 +1,24 @@
+{
+  "name": "Q_A-API",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Whimsical-Walnut/Q_A-API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Whimsical-Walnut/Q_A-API/issues"
+  },
+  "homepage": "https://github.com/Whimsical-Walnut/Q_A-API#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
