@@ -1,16 +1,17 @@
 const express = require('express');
+
 // create express app
+const fs = require('fs');
 const app = express();
 // Setup server port
-const port = process.env.PORT || 5000;
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }))
+const port = 5000;
+app.use(express.json());
 // parse requests of content-type - application/json
-app.use(express.json())
-// define a root route
-app.get('/', (req, res) => {
-  res.send("Hello World");
-});
+
+const routes = require('./Q_A.js');
+
+app.use('/qa/questions', routes);
+
 // listen for requests
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);

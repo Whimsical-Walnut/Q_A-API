@@ -1,0 +1,22 @@
+USE Q_A;
+
+-- LOAD DATA LOCAL INFILE './questions.csv'
+-- INTO TABLE results
+-- FIELDS TERMINATED BY ','
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
+
+-- LOAD DATA LOCAL INFILE './answers.csv'
+-- INTO TABLE answers
+-- FIELDS TERMINATED BY ','
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
+
+-- LOAD DATA LOCAL INFILE './answers_photos.csv'
+-- INTO TABLE photos
+-- FIELDS TERMINATED BY ','
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
