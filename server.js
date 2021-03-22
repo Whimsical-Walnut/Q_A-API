@@ -8,9 +8,9 @@ const port = 5000;
 app.use(express.json());
 // parse requests of content-type - application/json
 
-const routes = require('./Q_A.js');
+const routes = require('./Q_A.routes.js');
 
-app.use('/qa/questions', routes);
+app.use('/qa', routes);
 
 // listen for requests
 app.listen(port, () => {

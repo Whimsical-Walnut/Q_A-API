@@ -1,40 +1,10 @@
 'use strict';
 var db = require('../db/db.js');
 
-exports.getQuestions = (productId) => {
-  return new Promise((resolve, reject) => {
-    var str = `SELECT question_id from results where product_id = ${productId}`;
-    db.query(str, (err, result) => {
-      if(err) reject(err);
-      resolve(result);
-    })
-  })
-}
-
-exports.getAnswers = (questionId) => {
-  return new Promise((resolve, reject) => {
-    var str = `SELECT * FROM answers where question_id = ${questionId}`;
-    db.query(str, (err, result) => {
-      if(err) reject(err);
-      resolve(result);
-    })
-  })
-}
-
-exports.getPhotos = (answerId) => {
-  return new Promise((resolve, reject) => {
-    var str = `SELECT * FROM photos where answer_id  = ${answerId}`;
-    db.query(str, (err, result) => {
-      if(err) reject(err)
-      resolve(result);
-    })
-  })
-}
-
 //304558
 exports.getAll = (product_id) => {
   return new Promise((resolve, reject) => {
-    var str = `SELECT * FROM results JOIN answers On results.question_id = answers.question_id LEFT JOIN photos ON photos.answer_id = answers.AnsId WHERE product_id = ${product_id}`;
+    var str = `SELECT *,results.question_id FROM results LEFT JOIN answers On results.question_id = answers.question_id LEFT JOIN photos ON photos.answer_id = answers.AnsId WHERE product_id = ${product_id} AND report=0`;
     db.query(str, (err, result) => {
       if(err) reject(err)
       resolve(result);
@@ -42,35 +12,84 @@ exports.getAll = (product_id) => {
   })
 }
 
-// results.product_id, results.question_id, results.question_body, results.question_date, results.asker_name, results.asker_email, results.reported, results.question_helpfulness, answers.id, answers.body, answers.date, answers.answerer_name, answers.reported, answers.helpful, photos.*
+exports.getByQ = (question_id) => {
+  return new Promise((resolve, reject) => {
+    var str = `SELECT * FROM answers LEFT JOIN photos ON answers.AnsId = photos.answer_id WHERE question_id = ${question_id}`;
+    db.query(str, (err, result) => {
+      if(err) reject(err)
+      resolve(result);
+    })
+  })
+}
 
+exports.productExists = (product_id, question_body, question_date, asker_name, asker_email, reported, question_helpfulness) => {
+  return new Promise((resolve, reject) => {
+    var str = `INSERT INTO results VALUES (NULL, ${product_id}, '${question_body}', '${question_date}', '${asker_name}', '${asker_email}', ${reported}, ${question_helpfulness})`;
+    db.query(str, (err, result) => {
+      if(err) reject(err)
+      resolve(result)
+    })
+  })
+}
 
+exports.postQid = (question_id, body, date, name, email, reported, helpful ) => {
+  return new Promise((resolve, reject) => {
+    var str = `INSERT INTO answers VALUES(NULL, ${question_id}, '${body}', '${date}', '${name}', '${email}', ${reported}, ${helpful})`;
+    db.query(str, (err,result) => {
+      if(err) reject(err)
+      resolve(result);
+    })
+  })
+}
 
-// getAnswers(30405)
-// .then((result) => {
-// })
-// .catch((err) => {
-//   console.log(result)
-// })
+exports.postPhoto = (ansId, urlArr) => {
+  var arr = [];
+  for(var i = 0; i < urlArr.length; i++) {
+    var str = `INSERT INTO photos VALUES (NULL, ${ansId}, '${urlArr[i]}')`;
+    db.query(str);
+  }
+}
 
-// const test = () => {
-//   return Promise.all([getAnswers(30405), getAnswers(30405)])
-//   .then((values) => {
-//     let qa = {
-//       product_id: 12312,
-//       results: []
-//     }
-//     qa.results = qa.results.concat(...values);
-//     return qa;
-//   })
-//   .catch((err) => {
-//     console.log(err)
-//   });
-// }
-// test()
-// .then((result) => {
-//   result = JSON.stringify(result);
-//       result = JSON.parse(result);
-// console.log(result);
-// })
+exports.isHelpful = (question_id) => {
+  var str = `UPDATE results SET question_helpfulness=question_helpfulness+1 WHERE question_id=${question_id}`;
+  db.query(str, (err, result) => {
+    if(err) {
+      console.log('Something broke in update');
+    } else {
+      console.log('Updated succesfully');
+    }
+  });
+}
 
+exports.isReported = (question_id) => {
+  var str = `UPDATE results SET report=report+1 WHERE question_id=${question_id}`;
+  db.query(str, (err, result) => {
+    if(err) {
+      console.log('Something broke in report');
+    } else {
+      console.log('Reported succesfully');
+    }
+  });
+}
+
+exports.AnsHelpful = (Ans_id) => {
+  var str = `UPDATE answers SET helpful=helpful+1 WHERE AnsId=${Ans_id}`;
+  db.query(str, (err, result) => {
+    if(err) {
+      console.log('Something broke in update',err);
+    } else {
+      console.log('Updated succesfully');
+    }
+  });
+}
+
+exports.isAnsReported = (Ans_id) => {
+  var str = `UPDATE answers SET reported=reported+1 WHERE AnsId=${Ans_id}`;
+  db.query(str, (err, result) => {
+    if(err) {
+      console.log('Something broke in report',err);
+    } else {
+      console.log('Reported succesfully');
+    }
+  });
+}
