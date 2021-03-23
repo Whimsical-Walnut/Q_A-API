@@ -7,7 +7,7 @@ const app = express();
 const port = 5000;
 app.use(express.json());
 // parse requests of content-type - application/json
-
+app.use(express.urlencoded({extended: false}));
 const routes = require('./Q_A.routes.js');
 
 app.use('/qa', routes);

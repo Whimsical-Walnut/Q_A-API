@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-    "load": "mysql --local_infile -u root  < LoadCSV.sql"
+    "start": "node server.js",
+    "load": "mysql --local_infile -u root  < LoadCSV.sql",
+    "k6": "k6 run -o influxdb=http://localhost:8086/myk6db script.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "express": "^4.17.1",
     "load": "^1.0.2",
     "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
     "nodemon": "^2.0.7"
   }
 }

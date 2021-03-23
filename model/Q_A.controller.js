@@ -1,4 +1,3 @@
-'use strict';
 const model = require('./Q_A.model.js');
 
 exports.getAllQuestions = function(req, res) {

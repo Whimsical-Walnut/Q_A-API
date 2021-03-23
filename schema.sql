@@ -16,13 +16,13 @@ CREATE TABLE results (
 );
 
 CREATE TABLE answers (
-  id INT NOT NULL AUTO_INCREMENT,
+  AnsId INT NOT NULL AUTO_INCREMENT,
   question_id INT NOT NULL,
   body varchar(255),
   date varchar(255),
   answerer_name varchar(255),
   answerer_email varchar(255),
-  reported tinyint(0),
+  report tinyint(0),
   helpful INT,
   PRIMARY KEY (id),
   FOREIGN KEY (question_id) REFERENCES results(question_id)
