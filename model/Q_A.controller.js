@@ -112,7 +112,7 @@ exports.getQ = function(req, res) {
             body: cur.body,
             date: cur.date,
             answerer_name: cur.answerer_name,
-            helpfulness: cur.help,
+            helpfulness: cur.helpful,
             photos: [],
           }
           if(cur.id !== null) {

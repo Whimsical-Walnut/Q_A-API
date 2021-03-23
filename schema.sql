@@ -11,9 +11,11 @@ CREATE TABLE results (
   asker_name varchar(255),
   asker_email varchar(255),
   reported tinyint(0),
-  helpful int,
+  question_helpfulness int,
   PRIMARY KEY (question_id)
 );
+
+CREATE INDEX product_id ON results (product_id);
 
 CREATE TABLE answers (
   AnsId INT NOT NULL AUTO_INCREMENT,
@@ -28,6 +30,8 @@ CREATE TABLE answers (
   FOREIGN KEY (question_id) REFERENCES results(question_id)
 );
 
+CREATE INDEX question_id ON answers (question_id);
+
 CREATE TABLE photos (
   id int NOT NULL AUTO_INCREMENT,
   answer_id INT,
@@ -35,3 +39,5 @@ CREATE TABLE photos (
   PRIMARY KEY (id),
   FOREIGN KEY (answer_id) REFERENCES answers(id)
 );
+
+CREATE INDEX answer_id ON photos (answer_id);

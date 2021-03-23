@@ -3,7 +3,8 @@ var db = require('../db/db.js');
 //304558
 exports.getAll = (product_id) => {
   return new Promise((resolve, reject) => {
-    var str = `SELECT *,results.question_id FROM results LEFT JOIN answers On results.question_id = answers.question_id LEFT JOIN photos ON photos.answer_id = answers.AnsId WHERE product_id = ${product_id} AND report=0`;
+    var str = `SELECT *,results.question_id FROM results LEFT JOIN answers On results.question_id = answers.question_id LEFT JOIN photos ON photos.answer_id = answers.AnsId WHERE product_id = ${product_id} AND report=0
+    ORDER BY question_helpfulness desc`;
     db.query(str, (err, result) => {
       if(err) reject(err)
       resolve(result);
@@ -13,7 +14,7 @@ exports.getAll = (product_id) => {
 
 exports.getByQ = (question_id) => {
   return new Promise((resolve, reject) => {
-    var str = `SELECT * FROM answers LEFT JOIN photos ON answers.AnsId = photos.answer_id WHERE question_id = ${question_id}`;
+    var str = `SELECT * FROM answers LEFT JOIN photos ON answers.AnsId = photos.answer_id WHERE question_id = ${question_id} ORDER BY FIELD (answerer_name, "Seller") desc, helpful desc `;
     db.query(str, (err, result) => {
       if(err) reject(err)
       resolve(result);
